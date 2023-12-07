@@ -1,5 +1,5 @@
 class Race
-  attr_reader :distance, :time
+  attr_reader :record, :time
 
   # the time defines the duration of the race
   # the record defines the best distance achieved recorded for that race in milimeters
