@@ -13,8 +13,6 @@ def parse_file(file_path)
       seeds = line.scan(/\d+/).map(&:to_i)
       almanac.set_seeds(seeds)
     when /^[A-Za-z]/
-      # puts "New resource map = #{line}"
-      # puts "Prev resource map = #{new_resource_map}"
       almanac.add_resource_mapping(new_resource_map) if new_resource_map
 
       words = line.split(/[- ]+/)
@@ -33,58 +31,39 @@ def parse_file(file_path)
 end
 
 def get_location_number(almanac, seed)
-  source = seed
-
   almanac.resource_mappings.each do |current_mapping|
-    # puts "new source is #{source}"
-    # puts "my current mapping is #{current_mapping.source} to #{current_mapping.destination}"
     current_mapping.mappings.each do |mapping|
-      map_start = mapping.map_start
-      map_end = mapping.map_end
-      map_offset = mapping.map_offset
-
-      # puts "my range is #{map_start} - #{map_end}"
-      # puts "my offset is #{map_offset}"
-      if (map_start..map_end).include?(source)
-        source += map_offset
+      if mapping.map_start <= seed && seed < mapping.map_end
+        seed += mapping.map_offset
         break
       end
     end
   end
 
-  source
+  seed
 end
-
 def get_lowest_location_number(almanac)
   lowest_location = nil
   seeds = almanac.seeds
-  size = seeds.size
-  index = 0
 
-  while index < size
-    start = seeds[index]
-    count = seeds[index + 1]
-
+  seeds.each_slice(2) do |start, count|
     puts "My current seed is #{start}"
     puts "My current count is #{count}"
 
-    while count.positive?
-      puts "My current count is #{count}" if (count % 1_000_000).zero?
+    count.times do |i|
+      puts "My current seed is #{start}, with count #{i}/#{count}" if (i % 1_000_000).zero?
       location_number = get_location_number(almanac, start)
-      lowest_location = location_number if lowest_location.nil? || (lowest_location > location_number)
+      lowest_location = location_number if lowest_location.nil? || (location_number < lowest_location)
       start += 1
-      count -= 1
     end
-    index += 2
   end
 
   lowest_location
 end
 
+
 almanac = parse_file('day5/data/input.txt')
-
-# puts "Almanac seeds = #{almanac.seeds}"
-
+puts "Almanac seeds = #{almanac.seeds}"
 lowest_location = get_lowest_location_number(almanac)
 puts "The Lowest Location is #{lowest_location}"
 
