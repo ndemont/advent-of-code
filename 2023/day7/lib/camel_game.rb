@@ -10,7 +10,7 @@ class CamelGame
     ordered_hands_by_comparison = order_hands_by_comparison
 
     ordered_hands_by_comparison.each do |hand|
-      puts "#{hand.all_cards.join('')} #{hand.bid}, #{hand.type}"
+      puts "#{hand.all_cards.join('')} #{hand.bid}, #{hand.regular_type}"
     end
 
     calculate_winnings(ordered_hands_by_comparison)
@@ -20,9 +20,14 @@ class CamelGame
 
   def order_hands_by_comparison
     @hands.sort do |hand1, hand2|
-      if hand1.type > hand2.type
+      puts hand1
+      puts hand2
+      best_type1 = [hand1.regular_type, hand1.joker_type].max
+      best_type2 = [hand2.regular_type, hand2.joker_type].max
+
+      if best_type1 > best_type2
         1
-      elsif hand2.type > hand1.type
+      elsif best_type2 > best_type1
         -1
       elsif hand1.compare_cards(hand2)
         -1
