@@ -1,4 +1,4 @@
-FILE_PATH = './day2/input.txt'.freeze
+FILE_PATH = './day2/lib.txt'.freeze
 BAG = {'red' => 12, 'green' => 13, 'blue' => 14}
 
 @valid_games_sum = 0

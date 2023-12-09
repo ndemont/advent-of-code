@@ -62,7 +62,7 @@ def get_lowest_location_number(almanac)
 end
 
 
-almanac = parse_file('day5/data/input.txt')
+almanac = parse_file('day5/data/lib.txt')
 puts "Almanac seeds = #{almanac.seeds}"
 lowest_location = get_lowest_location_number(almanac)
 puts "The Lowest Location is #{lowest_location}"

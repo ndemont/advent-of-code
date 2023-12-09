@@ -5,24 +5,25 @@ class Hand
   attr_reader :cards, :type, :bid
 
   LABEL = {
-    '2': 0,
-    '3': 1,
-    '4': 2,
-    '5': 3,
-    '6': 4,
-    '7': 5,
-    '8': 6,
-    '9': 7,
-    'T': 8,
-    'J': 9,
+    'J': 0,
+    '2': 1,
+    '3': 2,
+    '4': 3,
+    '5': 4,
+    '6': 5,
+    '7': 6,
+    '8': 7,
+    '9': 8,
+    'T': 9,
     'Q': 10,
     'K': 11,
     'A': 12
   }.freeze
   def initialize(cards, bid)
-    @cards = cards
+    @all_cards = cards.reject! { |card| card == 'J' }
     @bid = bid
     @type = hand_type
+    @jokers = cards.count('J')
   end
 
   def compare_cards(other_hand)
@@ -57,15 +58,49 @@ class Hand
   end
 
   def five_of_a_kind?
-    cards.uniq.length == 1
+    if cards.uniq.length == 1
+      true
+    elsif @jokers == 1 && four_of_a_kind?
+      true
+    elsif @jokers == 2 && three_of_a_kind?
+      true
+    elsif @jokers == 3 && one_pair?
+      true
+    elsif @jokers == 4
+      true
+    else
+      @jokers == 5
+    end
   end
 
   def four_of_a_kind?
-    cards.group_by(&:to_s).any? { |_, group| group.length == 4 }
+    if cards.group_by(&:to_s).any? { |_, group| group.length == 4 }
+      true
+    elsif @jokers == 1 && three_of_a_kind?
+      true
+    elsif @jokers == 2 && one_pair?
+      true
+    elsif @jokers == 3
+      true
+    else
+      @jokers == 4
+    end
   end
 
   def full_house?
-    three_of_a_kind? && one_pair?
+    if three_of_a_kind? && one_pair?
+      true
+    elsif @jokers == 1 && two_pair?
+      true
+    elsif @jokers == 2 && three_of_a_kind?
+      true
+    elsif @jokers == 3 && one_pair?
+      true
+    elsif @jokers == 4
+      true
+    else
+      @jokers == 5
+    end
   end
 
   def two_pair?

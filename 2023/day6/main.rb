@@ -1,4 +1,5 @@
 require_relative 'lib/race.rb'
+
 def parse_file(file_path)
   races = []
   time = 0
@@ -18,7 +19,7 @@ def parse_file(file_path)
   races
 end
 
-races = parse_file('day6/data/input.txt')
+races = parse_file('day6/data/lib.txt')
 total_possibilities_multiple = 1
 
 races.each do |race|

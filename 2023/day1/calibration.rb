@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-file_path = './day1/input.txt'
+file_path = './day1/lib.txt'
 class LineCalibration
   WORD_TO_NUMBER = {
     'one' => '1',

@@ -9,6 +9,10 @@ class CamelGame
   def count_winnings
     ordered_hands_by_comparison = order_hands_by_comparison
 
+    ordered_hands_by_comparison.each do |hand|
+      puts "#{hand.all_cards.join('')} #{hand.bid}, #{hand.type}"
+    end
+
     calculate_winnings(ordered_hands_by_comparison)
   end
 

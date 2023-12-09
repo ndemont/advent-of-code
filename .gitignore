@@ -1,2 +1,2 @@
-.vscode/settings.json
-2023/.idea/*
+.vscode
+**/**.idea

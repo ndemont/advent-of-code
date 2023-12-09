@@ -1,4 +1,4 @@
-FILE_PATH = './day4/input.txt'.freeze
+FILE_PATH = './day4/lib.txt'.freeze
 
 @cards_pile = []
 @total_points = 0
