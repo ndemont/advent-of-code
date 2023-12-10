@@ -32,28 +32,34 @@ end
 
 network = parse_file('2023/day8/data/input3.txt')
 
-all_nodes_end = false
-while all_nodes_end == false
-  puts @steps
-  network.instructions.each_char do |instruction|
-    new_starting_nodes = []
+@starting_nodes.each do |initial_node|
+  start_node = initial_node
 
-    all_nodes_end = true
-    @starting_nodes.each do |node|
-      new_starting_nodes << network.get_next_node(node, instruction)
+  while start_node.end_node? == false
+    network.instructions.each_char do |instruction|
+      next_node = network.get_next_node(start_node, instruction)
+      initial_node.steps += 1
 
-      all_nodes_end = false unless node.end_node?
+      start_node = next_node
+      break if next_node.end_node?
     end
-
-    if all_nodes_end
-      puts @steps
-      break
-    end
-
-    @steps += 1
-    @starting_nodes = new_starting_nodes
-    all_nodes_end = false
   end
 end
+
+def get_greatest_common_divisor(a, b)
+  return a if b.zero?
+
+  get_greatest_common_divisor(b, a % b)
+end
+
+def get_least_common_multiple(a, b)
+  (a * b) / get_greatest_common_divisor(a, b)
+end
+
+array = @starting_nodes.map(&:steps)
+
+@steps = array.reduce { |acc, num|
+  get_least_common_multiple(acc, num)
+}
 
 puts @steps

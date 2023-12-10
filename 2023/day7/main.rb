@@ -16,7 +16,7 @@ def parse_file(file_path)
   hands
 end
 
-hands = parse_file('2023/day7/data/input.txt')
+hands = parse_file('2023/day7/data/lib.txt')
 camel_game = CamelGame.new(hands)
 
 puts "Total winnings: #{camel_game.count_winnings}"
