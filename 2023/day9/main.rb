@@ -17,7 +17,7 @@ def fill_histories
   end
 end
 
-parse_file('2023/day9/data/input.txt')
+parse_file('2023/day9/data/lib.txt')
 fill_histories
 
 first_extrapolated_sum = 0
