@@ -1,4 +1,4 @@
-ls FILE_PATH = './day3/lib.txt'.freeze
+FILE_PATH = './day3/lib.txt'.freeze
 
 @map = []
 @length = 0
