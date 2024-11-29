@@ -144,13 +144,13 @@ def check_perfect_vertical_symmetry_with_one_error_margin
 end
 
 def summarize_horizontal_pattern_notes
-  @perfect_horizontal_symmetries.each do |symmetry |
+  @perfect_horizontal_symmetries.each do |symmetry|
     @pattern_notes_sum += (symmetry[:row] + 1) * 100
   end
 end
 
 def summarize_vertical_pattern_notes
-  @perfect_vertical_symmetries.each do | symmetry |
+  @perfect_vertical_symmetries.each do |symmetry|
     @pattern_notes_sum += symmetry[:column] + 1
   end
 end

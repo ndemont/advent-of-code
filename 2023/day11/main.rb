@@ -3,8 +3,8 @@
 @universe = []
 @shortest_path_list = []
 @all_path_count = 0
-@index = 2000008
-@expansion_coefficient = 1000000
+@index = 2_000_008
+@expansion_coefficient = 1_000_000
 
 def print_universe
   @universe.each { |row| puts row.join(' ') }
@@ -45,35 +45,30 @@ def expand_galaxy_rows
 end
 
 def expand_galaxy_columns
-  new_universe = []
+  new_universe = Array.new(@universe.length) { [] }
 
-  @universe.each do |row|
-    new_row = []
+  @universe.each_with_index do |row, row_index|
+    new_row = new_universe[row_index]
 
-    row.each.with_index do |tile, index|
-      if @empty_columns.include? index
-        @expansion_coefficient.times { new_row << tile }
-      else
-        new_row << tile
-      end
+    row.each_with_index do |tile, col_index|
+      new_row.concat([tile] * @expansion_coefficient) if @empty_columns.include?(col_index)
+      new_row << tile unless @empty_columns.include?(col_index)
     end
 
-
-    puts @index -= 1
-    new_universe << new_row
+    @index -= 1
+    puts @index if (@index % 10).zero?
   end
 
   @universe = new_universe
 end
-
 def assign_galaxies
-  galaxie_number = 1
+  galaxy_number = 1
 
   @universe.each.with_index do |row, y|
     row.each.with_index do |tile, x|
       if tile == '#'
-        @universe[y][x] = galaxie_number
-        galaxie_number += 1
+        @universe[y][x] = galaxy_number
+        galaxy_number += 1
       end
     end
   end
@@ -104,9 +99,7 @@ end
 def count_shortest_path_between_each_galaxy
   @universe.each.with_index do |row, y|
     row.each.with_index do |tile, x|
-      if tile.is_a? Integer
-        @shortest_path_list << count_shortest_path_to_all_galaxies_from([y, x])
-      end
+      @shortest_path_list << count_shortest_path_to_all_galaxies_from([y, x]) if tile.is_a? Integer
     end
   end
 end
@@ -119,15 +112,15 @@ puts "empty_columns: #{@empty_columns}"
 puts "empty_rows: #{@empty_rows}"
 
 expand_galaxy_rows
-puts "galaxy rows expanded"
+puts 'galaxy rows expanded'
 # print_universe
 
 expand_galaxy_columns
-puts "galaxy columns expanded"
+puts 'galaxy columns expanded'
 # print_universe
 
 assign_galaxies
-puts "galaxies assigned"
+puts 'galaxies assigned'
 # print_universe
 
 count_shortest_path_between_each_galaxy
