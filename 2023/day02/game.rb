@@ -18,7 +18,7 @@ def count_cubes
       game_number = Regexp.last_match(1).to_i
       ''
     end
-    
+
     max = { 'red' => 0, 'green' => 0, 'blue' => 0 }
 
     turns = parse_turns_line(line)

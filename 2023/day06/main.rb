@@ -30,4 +30,3 @@ races.each do |race|
 end
 
 puts total_possibilities_multiple
-
